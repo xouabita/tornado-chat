@@ -1,0 +1,16 @@
+{
+  "name": "tornado-chat",
+  "version": "0.0.1",
+  "homepage": "https://github.com/xouabita/tornado-chat",
+  "authors": [
+    "xouabita <xouabita@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
