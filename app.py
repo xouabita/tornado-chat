@@ -57,6 +57,8 @@ app = tornado.web.Application([
     (r'/chat', WebSocketChatHandler),
     (r'/chatrooms', ChatroomsHandler),
     (r'/assets/(.*)', tornado.web.StaticFileHandler, {'path': 'bower_components'}),
+    (r'/styles/(.*)', tornado.web.StaticFileHandler, {'path': 'styles'}),
+    (r'/scripts/(.*)', tornado.web.StaticFileHandler, {'path': 'scripts'}),
 ])
 app.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
