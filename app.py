@@ -21,7 +21,13 @@ class ChatroomsHandler(tornado.web.RequestHandler):
         res = es.search(index=ELASTIC_INDEX, body={"query": {"match_all": {}}})
         answer = []
         for hit in res['hits']['hits']:
-            answer.append(hit["_source"])
+            room = {
+                "_id": hit["_id"],
+                "title": hit["_source"]['title'],
+                "timestamp": hit["_source"]['timestamp'],
+                "updated": hit["_source"]['timestamp']
+            }
+            answer.append(room)
         self.write(json_encode(answer))
 
     def post(self):
