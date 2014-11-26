@@ -3,66 +3,13 @@
 <head>
     <title>Simple Chat Tornado</title>
     <meta charset="utf-8" />
-    <script>
-        var ws;
-
-        function createChatEntry(username, message) {
-            var entry = document.createElement("div");
-            entry.class = "chat_entry";
-
-            var dom_uname = document.createElement("span");
-            dom_uname.class = "chat_username"
-            dom_uname.innerHTML = username+": ";
-            entry.appendChild(dom_uname);
-
-            var dom_msg = document.createElement("span");
-            dom_msg.class = "chat_message";
-            dom_msg.innerHTML = message;
-            entry.appendChild(dom_msg);
-
-            return entry;
-        }
-
-        function openWS(messageContainer) {
-            ws = new WebSocket("ws://localhost:8888/chat")
-            ws.onmessage = function(e) {
-                var data = JSON.parse(e.data);
-                messageContainer.appendChild(createChatEntry(data.author, data.message));
-            };
-            ws.onclose = function (e) {
-                openWS(messageContainer);
-            };
-        }
-
-        function sendMessage() {
-            var data = {
-                author: document.getElementById("username").value,
-                message: document.getElementById("message").value
-            }
-            if (data.author && data.message) {
-                ws.send(JSON.stringify(data));
-            }
-        }
-
-        window.onload = function() {
-            var messageContainer = document.getElementById("chat");
-            if ("WebSocket" in window) {
-                messageContainer.appendChild(createChatEntry("[SYSTEM]","Websocket is supported by your browser!"));
-                messageContainer.appendChild(createChatEntry("[SYSTEM]","Pick a username and start sending out messages."));
-                openWS(messageContainer);
-            }
-            else {
-                messageContainer.appendChild(createChatEntry("[SYSTEM]","WebSocket is NOT supported by your browser!"));
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" media="all" />
+    <script src="/assets/jquery/dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/assets/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/assets/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<div id="chat" style="width: 100%; height: 40em; overflow: scroll; font-family: Arial"></div>
-<div id="input_area">
-    <input id="username" type="text" placeholder="Your username" style="display: block; width: 200px">
-    <textarea id="message" placeholder="Your message" style="display: block; width: 400px"></textarea>
-    <button onclick="sendMessage()" style"display: block">Send</button>
-</div>
+    <h1>Simple Chat</h1>
 </body>
 </html>

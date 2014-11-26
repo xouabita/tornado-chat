@@ -55,7 +55,8 @@ class WebSocketChatHandler(tornado.websocket.WebSocketHandler):
 app = tornado.web.Application([
     (r'/', IndexHandler),
     (r'/chat', WebSocketChatHandler),
-    (r'/chatrooms', ChatroomsHandler)
+    (r'/chatrooms', ChatroomsHandler),
+    (r'/assets/(.*)', tornado.web.StaticFileHandler, {'path': 'bower_components'}),
 ])
 app.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
