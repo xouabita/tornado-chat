@@ -1,0 +1,9 @@
+<div class="row" data-ng-repeat="msg in room.messages">
+    <p><b>{{msg.username}}:</b> {{msg.message}}</p>
+</div>
+<div class="input-group">
+    <input type="text" class="form-control" id="message" placeholder="Enter message">
+    <div class="input-group-btn">
+        <button class="btn btn-default" data-ng-click="postMsg()" type="button">Send</button>
+    </div>
+</div>
