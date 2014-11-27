@@ -3,7 +3,7 @@
         <h3 class="panel-title">Get a room:</h3>
     </div>
     <ul class="list-group">
-        <li data-ng-repeat="room in rooms" class="list-group-item"><a href="#">{{ room.title }}</a></li>
+        <li data-ng-repeat="room in rooms" class="list-group-item"><a href="/chatroom/{{room._id}}">{{ room.title }}</a></li>
     </ul>
     <div class="input-group">
         <input type="text" class="form-control" id="room-title" placeholder="Name for the new board">
