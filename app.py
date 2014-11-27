@@ -7,8 +7,13 @@ from tornado.escape import json_encode
 import json
 
 ELASTIC_INDEX = "simple-chat-tornado"
-
 es = Elasticsearch()
+
+ROOMS = {}
+
+dtjson = lambda obj: (
+    obj.isoformat() if isinstance(obj, datetime) else None
+)
 
 class StaticFileHandler(tornado.web.StaticFileHandler):
     def set_extra_headers(self, path):
@@ -71,28 +76,29 @@ class ChatroomHandler(tornado.web.RequestHandler):
         }
         self.write(json_encode(answer))
 
-    def post(self, room):
+    def post(self, room_id):
         data = json.loads(self.request.body)
         doc = {
             "username": data['username'],
             "message": data['message'],
-            "room": room,
+            "room": room_id,
             "timestamp": datetime.now()
         }
         es.index(index=ELASTIC_INDEX, doc_type="message", body=doc)
+        for item in ROOMS[room_id]:
+            item.write_message(json.dumps(doc, default=dtjson))
 
-class WebSocketChatHandler(tornado.websocket.WebSocketHandler):
-    def open(self, *args):
-        print("open","WebSocketChatHandler")
-        clients.append(self)
-
-    def on_message(self, message):
-        print message
-        for client in clients:
-            client.write_message(message)
+class RoomSocket(tornado.websocket.WebSocketHandler):
+    def open(self, room_id):
+        self.room_id = room_id
+        if not room_id in ROOMS:
+            ROOMS[room_id] = []
+        ROOMS[room_id].append(self)
 
     def on_close(self):
-        clients.remove(self)
+        ROOMS[self.room_id].remove(self)
+        if len(ROOMS[self.room_id]) is 0:
+            ROOMS.pop(self.room_id, None)
 
 app = tornado.web.Application([
     (r'/', IndexHandler),
@@ -103,6 +109,7 @@ app = tornado.web.Application([
     (r'/styles/(.*)', StaticFileHandler, {'path': 'styles'}),
     (r'/scripts/(.*)', StaticFileHandler, {'path': 'scripts'}),
     (r'/angular_templates/(.*)', StaticFileHandler, {'path': 'angular_templates'}),
+    (r'/roomsocket/(.*)', RoomSocket)
 ])
 app.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
