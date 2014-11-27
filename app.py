@@ -9,7 +9,6 @@ import json
 ELASTIC_INDEX = "simple-chat-tornado"
 
 es = Elasticsearch()
-clients = []
 
 class StaticFileHandler(tornado.web.StaticFileHandler):
     def set_extra_headers(self, path):
@@ -21,6 +20,7 @@ class IndexHandler(tornado.web.RequestHandler):
             request.write(f.read())
 
 class ChatroomsHandler(tornado.web.RequestHandler):
+
     def get(request):
         res = es.search(index=ELASTIC_INDEX, body={"query": {"match_all": {}}})
         answer = []
@@ -43,6 +43,44 @@ class ChatroomsHandler(tornado.web.RequestHandler):
         }
         es.index(index=ELASTIC_INDEX, doc_type="chatroom", body=doc)
 
+class ChatroomHandler(tornado.web.RequestHandler):
+
+    def get(self, room):
+        roo = es.get(index=ELASTIC_INDEX, doc_type="chatroom", id=room)
+        msgs = es.search(index=ELASTIC_INDEX, doc_type="message", body={
+            "query": {
+                "match": {
+                    "room":room
+                }
+            },
+            "sort": [
+                {"timestamp": { "order":"desc"} }
+            ]
+        })
+        messages = []
+        for hit in msgs['hits']['hits']:
+            messages.append({
+                "username": hit["_source"]["username"],
+                "message": hit["_source"]["message"],
+                "timestamp": hit["_source"]["timestamp"]
+            })
+        answer = {
+            "_id": room,
+            "title": roo['_source']['title'],
+            "messages": messages
+        }
+        self.write(json_encode(answer))
+
+    def post(self, room):
+        data = json.loads(self.request.body)
+        doc = {
+            "username": data['username'],
+            "message": data['message'],
+            "room": room,
+            "timestamp": datetime.now()
+        }
+        es.index(index=ELASTIC_INDEX, doc_type="message", body=doc)
+
 class WebSocketChatHandler(tornado.websocket.WebSocketHandler):
     def open(self, *args):
         print("open","WebSocketChatHandler")
@@ -60,6 +98,7 @@ app = tornado.web.Application([
     (r'/', IndexHandler),
     (r'/chat', WebSocketChatHandler),
     (r'/chatrooms', ChatroomsHandler),
+    (r'/chatrooms/([a-zA-Z0-9-_]{22})', ChatroomHandler),
     (r'/assets/(.*)', StaticFileHandler, {'path': 'bower_components'}),
     (r'/styles/(.*)', StaticFileHandler, {'path': 'styles'}),
     (r'/scripts/(.*)', StaticFileHandler, {'path': 'scripts'}),
