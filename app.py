@@ -96,7 +96,7 @@ class WebSocketChatHandler(tornado.websocket.WebSocketHandler):
 
 app = tornado.web.Application([
     (r'/', IndexHandler),
-    (r'/chat', WebSocketChatHandler),
+    (r'/chatroom/.*', IndexHandler),
     (r'/chatrooms', ChatroomsHandler),
     (r'/chatrooms/([a-zA-Z0-9-_]{22})', ChatroomHandler),
     (r'/assets/(.*)', StaticFileHandler, {'path': 'bower_components'}),
