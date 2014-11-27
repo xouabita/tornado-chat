@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="tornadoChat">
 <head>
     <title>Simple Chat Tornado</title>
     <meta charset="utf-8" />
@@ -9,24 +9,10 @@
     <script src="/assets/jquery/dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/assets/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/assets/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/assets/angular-route/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/scripts/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body>
-    <h1 class="big-title">Simple Chat</h1>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Get a room:</h3>
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="#">test</a></li>
-            <li class="list-group-item"><a href="#">foobar</a></li>
-        </ul>
-        <div class="input-group">
-            <input type="text" class="form-control">
-            <span class="input-group-btn" placeholder="Name for the new board">
-                <button class="btn btn-default" type="button">Create new board</button>
-            </span>
-        </div>
-    </div>
+<body data-ng-controller="mainCtrl">
+    <div data-ng-view></div>
 </body>
 </html>
