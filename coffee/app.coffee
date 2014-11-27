@@ -8,6 +8,10 @@ tornadoChat.config [ '$routeProvider', '$locationProvider', ($routeProvider, $lo
         templateUrl: '/angular_templates/home.html'
         controller: 'homeCtrl'
 
+    $routeProvider.when '/chatroom/:id',
+        templateUrl: '/angular_templates/chatroom.html'
+        controller: 'chatroomCtrl'
+
     $locationProvider.html5Mode yes
 ]
 
@@ -34,4 +38,15 @@ tornadoChat.controller 'homeCtrl', ['$scope', '$http', ($scope, $http) ->
                 title: roomTitle
         .success ->
             document.getElementById('room-title').value = ""
+]
+
+# ~~~~~~~~~~~~~~~~~~~~~~~
+# Controller for chatroom
+# ~~~~~~~~~~~~~~~~~~~~~~~
+tornadoChat.controller 'chatroomCtrl', ['$scope', '$http', '$route', ($scope, $http, $route) ->
+    $http
+        method: 'get'
+        url: "/chatrooms/#{$route.current.params.id}"
+    .success (room) ->
+        $scope.room = room
 ]
