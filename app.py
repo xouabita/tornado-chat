@@ -54,7 +54,7 @@ class ChatroomHandler(tornado.web.RequestHandler):
                 }
             },
             "sort": [
-                {"timestamp": { "order":"desc"} }
+                {"timestamp": { "order":"asc"} }
             ]
         })
         messages = []
