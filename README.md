@@ -40,10 +40,23 @@ API
 
 #### Create a new chatroom
 ```bash
-curl -XPOST "localhost:8888/chatrooms" -d '{"title":"test"}'
+POST /chatrooms
+{
+  "title":"test"
+}
 ```
 
 #### Get the chatrooms list
 ```bash
-curl "localhost:8888/chatrooms"
+GET /chatrooms
+```
+### Messages
+
+#### Post a message
+```bash
+POST /chatrooms/:room_id
+{
+  "username":"user",
+  "message":"foobarlol"
+}
 ```
