@@ -44,16 +44,26 @@ tornadoChat.controller 'homeCtrl', ['$scope', '$http', ($scope, $http) ->
 # Controller for chatroom
 # ~~~~~~~~~~~~~~~~~~~~~~~
 tornadoChat.controller 'chatroomCtrl', ['$scope', '$http', '$route', ($scope, $http, $route) ->
+
+    $scope.ws = undefined
+    openWS = ->
+        $scope.ws = new WebSocket "ws://localhost:8888/roomsocket/#{$scope.room._id}"
+        $scope.ws.onmessage = (e) ->
+            $scope.room.messages.push JSON.parse(e.data)
+            $scope.$digest()
+        $scope.onclose = (e) -> openWS()
+
     $http
         method: 'get'
         url: "/chatrooms/#{$route.current.params.id}"
     .success (room) ->
         $scope.room = room
+        openWS()
 
     $scope.postMsg = ->
         # get the value
         message = document.getElementById('message').value
-        if message
+        if message != ""
             $http
                 method: 'post'
                 url: "/chatrooms/#{$scope.room._id}"
