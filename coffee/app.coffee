@@ -49,4 +49,17 @@ tornadoChat.controller 'chatroomCtrl', ['$scope', '$http', '$route', ($scope, $h
         url: "/chatrooms/#{$route.current.params.id}"
     .success (room) ->
         $scope.room = room
+
+    $scope.postMsg = ->
+        # get the value
+        message = document.getElementById('message').value
+        if message
+            $http
+                method: 'post'
+                url: "/chatrooms/#{$scope.room._id}"
+                data:
+                    username: "xou"
+                    message: message
+            .success ->
+                document.getElementById('message').value = ""
 ]
