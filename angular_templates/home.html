@@ -7,9 +7,9 @@
         <li data-ng-repeat="room in rooms" class="list-group-item"><a href="#">{{ room.title }}</a></li>
     </ul>
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Name for the new board">
+        <input type="text" class="form-control" id="room-title" placeholder="Name for the new board">
         <div class="input-group-btn">
-            <button class="btn btn-default" type="button">Create new board</button>
+            <button class="btn btn-default" data-ng-click="newRoom()" type="button">Create new board</button>
         </div>
     </div>
 </div>

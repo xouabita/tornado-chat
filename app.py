@@ -34,8 +34,8 @@ class ChatroomsHandler(tornado.web.RequestHandler):
             answer.append(room)
         request.write(json_encode(answer))
 
-    def post(request):
-        data = json.loads(request.get_argument('data'))
+    def post(self):
+        data = json.loads(self.request.body)
         doc = {
             "title": data['title'],
             "timestamp": datetime.now(),
