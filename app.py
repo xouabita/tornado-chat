@@ -11,10 +11,14 @@ ELASTIC_INDEX = "simple-chat-tornado"
 es = Elasticsearch()
 clients = []
 
+class StaticFileHandler(tornado.web.StaticFileHandler):
+    def set_extra_headers(self, path):
+        self.set_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+
 class IndexHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
     def get(request):
-        request.render("index.html")
+        with open('index.html') as f:
+            request.write(f.read())
 
 class ChatroomsHandler(tornado.web.RequestHandler):
     def get(self):
@@ -56,9 +60,9 @@ app = tornado.web.Application([
     (r'/', IndexHandler),
     (r'/chat', WebSocketChatHandler),
     (r'/chatrooms', ChatroomsHandler),
-    (r'/assets/(.*)', tornado.web.StaticFileHandler, {'path': 'bower_components'}),
-    (r'/styles/(.*)', tornado.web.StaticFileHandler, {'path': 'styles'}),
-    (r'/scripts/(.*)', tornado.web.StaticFileHandler, {'path': 'scripts'}),
+    (r'/assets/(.*)', StaticFileHandler, {'path': 'bower_components'}),
+    (r'/styles/(.*)', StaticFileHandler, {'path': 'styles'}),
+    (r'/scripts/(.*)', StaticFileHandler, {'path': 'scripts'}),
 ])
 app.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
