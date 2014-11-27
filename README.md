@@ -40,7 +40,7 @@ API
 
 #### Create a new chatroom
 ```bash
-curl -XPOST "localhost:8888/chatrooms" -d 'data={"title":"test"}'
+curl -XPOST "localhost:8888/chatrooms" -d '{"title":"test"}'
 ```
 
 #### Get the chatrooms list
