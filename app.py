@@ -63,6 +63,7 @@ app = tornado.web.Application([
     (r'/assets/(.*)', StaticFileHandler, {'path': 'bower_components'}),
     (r'/styles/(.*)', StaticFileHandler, {'path': 'styles'}),
     (r'/scripts/(.*)', StaticFileHandler, {'path': 'scripts'}),
+    (r'/angular_templates/(.*)', StaticFileHandler, {'path': 'angular_templates'}),
 ])
 app.listen(8888)
 tornado.ioloop.IOLoop.instance().start()
