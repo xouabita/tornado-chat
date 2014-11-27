@@ -54,12 +54,12 @@ class ChatroomHandler(tornado.web.RequestHandler):
                 }
             },
             "sort": [
-                {"timestamp": { "order":"asc"} }
+                {"timestamp": { "order":"desc"} }
             ]
         })
         messages = []
         for hit in msgs['hits']['hits']:
-            messages.append({
+            messages.insert(0, {
                 "username": hit["_source"]["username"],
                 "message": hit["_source"]["message"],
                 "timestamp": hit["_source"]["timestamp"]
