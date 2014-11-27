@@ -21,7 +21,7 @@ class IndexHandler(tornado.web.RequestHandler):
             request.write(f.read())
 
 class ChatroomsHandler(tornado.web.RequestHandler):
-    def get(self):
+    def get(request):
         res = es.search(index=ELASTIC_INDEX, body={"query": {"match_all": {}}})
         answer = []
         for hit in res['hits']['hits']:
@@ -32,10 +32,10 @@ class ChatroomsHandler(tornado.web.RequestHandler):
                 "updated": hit["_source"]['timestamp']
             }
             answer.append(room)
-        self.write(json_encode(answer))
+        request.write(json_encode(answer))
 
-    def post(self):
-        data = json.loads(self.get_argument('data'))
+    def post(request):
+        data = json.loads(request.get_argument('data'))
         doc = {
             "title": data['title'],
             "timestamp": datetime.now(),
