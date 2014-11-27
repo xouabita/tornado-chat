@@ -4,8 +4,7 @@
         <h3 class="panel-title">Get a room:</h3>
     </div>
     <ul class="list-group">
-        <li class="list-group-item"><a href="#">test</a></li>
-        <li class="list-group-item"><a href="#">foobar</a></li>
+        <li data-ng-repeat="room in rooms" class="list-group-item"><a href="#">{{ room.title }}</a></li>
     </ul>
     <div class="input-group">
         <input type="text" class="form-control" placeholder="Name for the new board">
