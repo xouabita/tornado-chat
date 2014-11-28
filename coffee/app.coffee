@@ -15,6 +15,20 @@ tornadoChat.config [ '$routeProvider', '$locationProvider', ($routeProvider, $lo
     $locationProvider.html5Mode yes
 ]
 
+# ~~~~~~~~~~~~~~~
+# Main Controller
+# ~~~~~~~~~~~~~~~
+tornadoChat.controller 'mainCtrl', [ '$scope', ($scope) ->
+    # Check if the user pick already a username
+    $scope.username = undefined
+    if localStorage.username then $scope.username = localStorage.username
+    $scope.saveUsername = ->
+        username = document.getElementById('username-input').value
+        if username
+            localStorage.username = username
+            $scope.username = username
+]
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~
 # Controller for homepage
 # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,8 +82,18 @@ tornadoChat.controller 'chatroomCtrl', ['$scope', '$http', '$route', ($scope, $h
                 method: 'post'
                 url: "/chatrooms/#{$scope.room._id}"
                 data:
-                    username: "xou"
+                    username: $scope.username
                     message: message
             .success ->
                 document.getElementById('message').value = ""
 ]
+
+# ~~~~~~~~~~~~~~~~
+#    Directives
+# ~~~~~~~~~~~~~~~~
+tornadoChat.directive 'modal', ->
+    restrict: 'C'
+    link: (scope, element, attrs) ->
+        scope.$watch attrs.visible, (val) ->
+            if not val then $(element).modal keyboard:no, backdrop: 'static'
+            else $(element).modal 'hide'

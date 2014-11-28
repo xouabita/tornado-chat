@@ -13,8 +13,21 @@
     <script src="/scripts/app.js" type="text/javascript" charset="utf-8"></script>
     <base href="/">
 </head>
-<body>
+<body data-ng-controller="mainCtrl">
     <h1 class="big-title">Simple Chat</h1>
     <div data-ng-view></div>
+    <div class="modal in" id="modal-username" data-visible="username">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header"><h4 class="modal-title">Pick a username</h4></div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="Username" id="username-input">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-ng-click="saveUsername()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
