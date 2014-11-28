@@ -69,7 +69,8 @@ class ChatroomHandler(tornado.web.RequestHandler):
             },
             "sort": [
                 {"timestamp": { "order":"desc"} }
-            ]
+            ],
+            "size": 50
         })
         messages = []
         for hit in msgs['hits']['hits']:
