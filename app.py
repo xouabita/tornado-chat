@@ -51,7 +51,9 @@ class ChatroomsHandler(tornado.web.RequestHandler):
             "timestamp": datetime.now(),
             "updated": datetime.now()
         }
-        es.index(index=ELASTIC_INDEX, doc_type="chatroom", body=doc)
+        res = es.index(index=ELASTIC_INDEX, doc_type="chatroom", body=doc)
+        doc['_id'] = res['_id']
+        self.write(json.dumps(doc, default=dtjson))
 
 class ChatroomHandler(tornado.web.RequestHandler):
 
