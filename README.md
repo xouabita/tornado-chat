@@ -50,6 +50,12 @@ POST /chatrooms
 ```bash
 GET /chatrooms
 ```
+
+#### Delete a chatroom
+```bash
+DELETE /chatrooms/:room_id
+```
+
 ### Messages
 
 #### Post a message
