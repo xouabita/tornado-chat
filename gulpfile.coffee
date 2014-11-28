@@ -7,6 +7,9 @@ shell   = require "gulp-shell"
 gulp.task "compass", ->
     gulp.src './sass/**/*.sass'
     .pipe compass( css: "./styles", sass: './sass')
+    .on 'error', (error) ->
+        console.log error.toString()
+        @emit 'end'
     .pipe gulp.dest("./styles")
 
 gulp.task "coffee", ->
