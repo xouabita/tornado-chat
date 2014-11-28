@@ -56,6 +56,15 @@ tornadoChat.controller 'homeCtrl', ['$scope', '$http', ($scope, $http) ->
         .success (room) ->
             document.getElementById('room-title').value = ""
             $scope.rooms.push room
+
+    $scope.deleteRoom = (room) ->
+        $http
+            method: 'delete'
+            url: "/chatrooms/#{room._id}"
+        .success ->
+            for r, i in $scope.rooms when r._id is room._id
+                $scope.rooms.splice i, 1
+                break
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~

@@ -6,7 +6,7 @@
     <ul class="list-group">
         <li data-ng-repeat="room in rooms" class="list-group-item">
             <a href="/chatroom/{{room._id}}">{{ room.title }}</a>
-            <button class="btn btn-danger btn-xs del-room" data-ng-click="delete">Delete</button>
+            <button class="btn btn-danger btn-xs del-room" data-ng-click="deleteRoom(room)">Delete</button>
         </li>
     </ul>
     <div class="input-group">
