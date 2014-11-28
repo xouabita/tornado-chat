@@ -53,8 +53,9 @@ tornadoChat.controller 'homeCtrl', ['$scope', '$http', ($scope, $http) ->
             url: '/chatrooms'
             data:
                 title: roomTitle
-        .success ->
+        .success (room) ->
             document.getElementById('room-title').value = ""
+            $scope.rooms.push room
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~
