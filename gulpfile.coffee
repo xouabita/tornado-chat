@@ -12,6 +12,9 @@ gulp.task "compass", ->
 gulp.task "coffee", ->
     gulp.src './coffee/**/*.coffee'
     .pipe coffee()
+    .on 'error', (error) ->
+        console.log error.toString()
+        @emit 'end'
     .pipe concat('app.js')
     .pipe gulp.dest('scripts')
 
