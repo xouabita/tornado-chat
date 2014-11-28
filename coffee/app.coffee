@@ -111,3 +111,16 @@ tornadoChat.directive 'modal', ->
         scope.$watch attrs.visible, (val) ->
             if not val then $(element).modal keyboard:no, backdrop: 'static'
             else $(element).modal 'hide'
+
+tornadoChat.directive 'scrollItem', ->
+    restrict: "A",
+    link: (scope, element, attributes) ->
+        if scope.$last
+            scope.$emit("Finished")
+
+tornadoChat.directive 'scrollIf', ->
+    restrict: "A",
+    link: (scope, element, attributes) ->
+        scope.$on "Finished", ->
+            height = element.outerHeight()
+            element.scrollTop(height)
