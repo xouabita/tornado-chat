@@ -66,3 +66,8 @@ POST /chatrooms/:room_id
   "message":"foobarlol"
 }
 ```
+
+Screenshots
+-----------
+
+![home](https://raw.github.com/xouabita/tornado-chat/master/screenshots/home.png) ![chatroom](https://raw.github.com/xouabita/tornado-chat/master/screenshots/chatroom.png)
