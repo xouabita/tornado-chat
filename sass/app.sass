@@ -21,3 +21,25 @@ hr
         float: right
 .del-room
     float: right
+.chat-box
+    .messages
+        overflow-y: auto
+        height: calc(100vh - 250px)
+        .message
+            height: 30px
+            padding: 0 10px
+            line-height: 30px
+            .username, .content
+                vertical-align: middle
+            .username
+                display: inline-block
+                font-weight: bold
+            .content
+                display: inline-block
+.chat-list-btn
+    margin-right: 10px
+a
+    color: #333
+    &:hover
+        text-decoration: none
+        color: #222

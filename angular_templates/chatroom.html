@@ -1,9 +1,19 @@
-<div class="row" data-ng-repeat="msg in room.messages">
-    <p><b>{{msg.username}}:</b> {{msg.message}}</p>
-</div>
-<div class="input-group">
-    <input type="text" class="form-control" id="message" placeholder="Enter message">
-    <div class="input-group-btn">
-        <button class="btn btn-default" data-ng-click="postMsg()" type="button">Send</button>
+<div class="chat-box panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{room.title}}</h3>
+        <button class="btn btn-primary btn-xs" data-ng-click="logout()">logout</button>
+        <a href="/" class="btn btn-default btn-xs chat-list-btn">Chatrooms list</a>
+    </div>
+    <div class="messages">
+        <div class="message" data-ng-repeat="msg in room.messages">
+            <div class="username">{{msg.username}}:</div>
+            <div class="content">{{msg.message}}</div>
+        </div>
+    </div>
+    <div class="input-group message-input">
+        <input type="text" class="form-control" id="message" placeholder="Enter message">
+        <div class="input-group-btn">
+            <button class="btn btn-default" data-ng-click="postMsg()" type="button">Send</button>
+        </div>
     </div>
 </div>
