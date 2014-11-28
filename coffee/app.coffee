@@ -30,6 +30,7 @@ tornadoChat.controller 'mainCtrl', [ '$scope', ($scope) ->
     $scope.logout = ->
         delete localStorage.username
         $scope.username = undefined
+    $scope.url = window.location.href.split('/')[2]
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +75,7 @@ tornadoChat.controller 'chatroomCtrl', ['$scope', '$http', '$route', ($scope, $h
 
     $scope.ws = undefined
     openWS = ->
-        $scope.ws = new WebSocket "ws://localhost:8888/roomsocket/#{$scope.room._id}"
+        $scope.ws = new WebSocket "ws://#{$scope.url}/roomsocket/#{$scope.room._id}"
         $scope.ws.onmessage = (e) ->
             $scope.room.messages.push JSON.parse(e.data)
             $scope.$digest()
