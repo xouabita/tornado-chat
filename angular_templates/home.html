@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Get a room:</h3>
-        <button class="btn btn-danger btn-xs" data-ng-click="logout()">logout</button>
+        <button class="btn btn-primary btn-xs" data-ng-click="logout()">logout</button>
     </div>
     <ul class="list-group">
         <li data-ng-repeat="room in rooms" class="list-group-item"><a href="/chatroom/{{room._id}}">{{ room.title }}</a></li>
