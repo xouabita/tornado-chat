@@ -27,7 +27,12 @@ class IndexHandler(tornado.web.RequestHandler):
 class ChatroomsHandler(tornado.web.RequestHandler):
 
     def get(request):
-        res = es.search(index=ELASTIC_INDEX, doc_type="chatroom", body={"query": {"match_all": {}}})
+        res = es.search(index=ELASTIC_INDEX, doc_type="chatroom", body={
+            "query": {"match_all": {}},
+            "sort": [
+                { "timestamp": { "order":"asc" } }
+            ]
+        })
         answer = []
         for hit in res['hits']['hits']:
             room = {
