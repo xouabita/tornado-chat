@@ -27,6 +27,9 @@ tornadoChat.controller 'mainCtrl', [ '$scope', ($scope) ->
         if username
             localStorage.username = username
             $scope.username = username
+    $scope.logout = ->
+        delete localStorage.username
+        $scope.username = undefined
 ]
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~
