@@ -97,6 +97,9 @@ class ChatroomHandler(tornado.web.RequestHandler):
         for item in ROOMS[room_id]:
             item.write_message(json.dumps(doc, default=dtjson))
 
+    def delete(self, room_id):
+        es.delete(index=ELASTIC_INDEX, doc_type="chatroom", id=room_id)
+
 class RoomSocket(tornado.websocket.WebSocketHandler):
     def open(self, room_id):
         self.room_id = room_id
